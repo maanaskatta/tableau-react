@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
@@ -73,7 +74,7 @@ const NavBar = () => {
           </button>
         </div>
         <div className="flex justify-center items-center">
-          <hr className=" w-52"></hr>
+          <hr className=" w-56"></hr>
         </div>
       </div>
 
@@ -157,7 +158,10 @@ export default function Analytics() {
                                 width: 1290,
                                 height: 2800,
                               }
-                            : {}),
+                            : {
+                                height: screen.height - 200,
+                                width: screen.width - 500,
+                              }),
                         }}
                         parameters={{
                           device: "desktop",
