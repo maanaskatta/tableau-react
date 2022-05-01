@@ -3,6 +3,7 @@ import { AiOutlineLoading3Quarters, AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import Logo from "../../Logo.png";
 
 export default function LoginPage() {
   const [userName, setUserName] = useState("");
@@ -27,17 +28,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-violet-800 flex">
+    <div className="bg-blue-700 flex">
       <div className="w-2/3 flex justify-center h-screen items-center">
         <div className="flex flex-col justify-center items-center">
-          <p className="text-8xl text-white">Social Media</p>
+          <p className="text-8xl text-white">Facebook</p>
           <p className="text-4xl text-white">Analytics Page</p>
         </div>
       </div>
-      <div className="w-1/2 bg-white">
+      <div className="w-1/2 bg-blue-50">
         <div className="p-5 flex flex-col justify-center h-screen">
           <div className="flex flex-col gap-10 justify-center">
-            <div className="bg-violet-800 flex flex-col gap-5 rounded-lg p-5">
+            <div className="flex w-full justify-center items-center">
+              <img src={Logo} alt="" width={250} />
+            </div>
+            <div className="bg-blue-700 flex flex-col gap-5 rounded-lg p-5">
               <div className="flex flex-col gap-1">
                 <div className="flex gap-1">
                   <AiOutlineUser className="text-white text-xl" />
@@ -65,7 +69,7 @@ export default function LoginPage() {
 
               <div className="flex justify-center">
                 <button
-                  className="bg-white text-lg text-violet-800 font-bold cursor-pointer px-10 py-2 rounded"
+                  className="bg-white text-lg text-blue-700 font-bold cursor-pointer px-10 py-2 rounded"
                   onClick={() => {
                     handleLogin();
                   }}

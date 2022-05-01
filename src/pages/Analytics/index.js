@@ -1,76 +1,52 @@
-import React, { useState, useEffect } from "react";
-import {
-  AiOutlineCar,
-  AiOutlineHistory,
-  AiOutlineReconciliation,
-} from "react-icons/ai";
-import { BiBuildingHouse, BiCategory } from "react-icons/bi";
-import { BsCardList, BsReceipt } from "react-icons/bs";
-import { FaCoins, FaTools, FaUsers } from "react-icons/fa";
-import { GiOpenGate } from "react-icons/gi";
-import { HiOutlineSpeakerphone } from "react-icons/hi";
-import { IoMdPhotos } from "react-icons/io";
-import { MdOutlineFeaturedPlayList } from "react-icons/md";
-import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
-import Gender from "./Gender";
-import Dashboard from "./Dashboard";
-import Intents from "./Intents";
-import ProductCategory from "./ProductCategory";
-import Location from "./Location";
-import ProblemsTrend from "./ProblemsTrend";
-import ProblemsOverview from "./ProblemsOverview";
-import Vendors from "./Vendors";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { HiOutlineSpeakerphone } from "react-icons/hi";
+import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
+import Tableau from "tableau-react";
 import Loading from "../../components/Loading";
+import Logo from "../../Logo.png";
+import { GoSignOut } from "react-icons/go";
 
 const analyticTiles = [
   {
     label: "Dashboard",
     path: "/dashboard",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <Dashboard />,
   },
   {
     label: "Vendors",
     path: "/vendors",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <Vendors />,
   },
   {
     label: "Intents",
     path: "/intents",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <Intents />,
   },
   {
     label: "ProductCategory",
     path: "/productCategory",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <ProductCategory />,
   },
   {
     label: "Location",
     path: "/location",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <Location />,
   },
   {
     label: "ProblemsTrend",
     path: "/problemsTrend",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <ProblemsTrend />,
   },
   {
     label: "ProblemsOverview",
     path: "/problemsOverview",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <ProblemsOverview />,
   },
   {
     label: "Gender",
     path: "/gender",
     icon: () => <HiOutlineSpeakerphone />,
-    render: () => <Gender />,
   },
 ];
 
@@ -80,9 +56,9 @@ const NavBar = () => {
 
   return (
     <div className="flex w-full flex-col gap-5">
-      <div className="flex flex-col gap-3 justify-center items-center p-3">
-        <div className="py-5 bg-white rounded-full">
-          {/* <img src={ASSLogo} alt="" width={150} /> */}
+      <div className="flex flex-col gap-5 justify-center items-center p-3">
+        <div>
+          <img src={Logo} alt="" width={120} />
         </div>
         <div className="flex justify-end w-full">
           <button
@@ -90,13 +66,14 @@ const NavBar = () => {
               history.push("/login");
               localStorage.setItem("role", null);
             }}
-            className="bg-purple-100 text-black px-3 py-2 rounded"
+            className="bg-red-600 text-white px-2 py-1 rounded flex justify-center items-center gap-2"
           >
-            Sign Out
+            <GoSignOut size={20} />
+            <p>Sign Out</p>
           </button>
         </div>
         <div className="flex justify-center items-center">
-          <hr className="w-60"></hr>
+          <hr className=" w-52"></hr>
         </div>
       </div>
 
@@ -106,13 +83,13 @@ const NavBar = () => {
             <div
               className={`${
                 index === currentTileIndex
-                  ? "bg-white text-purple-900"
+                  ? "bg-white text-blue-700"
                   : "text-white "
-              } px-5 py-3 hover:bg-black hover:text-white`}
+              } px-5 h-10 hover:bg-black hover:text-white flex items-center`}
             >
               <Link
                 to={`/analytics` + tile.path}
-                className=" font-semibold py-4"
+                className=" font-semibold py-4 flex items-center w-full"
                 onClick={() => {
                   setCurrentTileIndex(index);
                 }}
@@ -121,7 +98,7 @@ const NavBar = () => {
                   <div
                     className={`text-2xl ${
                       index === currentTileIndex
-                        ? "text-purple-800"
+                        ? "text-blue-700"
                         : "text-white"
                     }`}
                   >
@@ -145,10 +122,11 @@ export default function Analytics() {
   const fetchTableauLinks = async () => {
     setIsLoading(true);
     const res = await axios.get(
-      "https://gist.githubusercontent.com/maanaskatta/3cf75f6b39dae46726d38eda2bd3e72a/raw/69185e00fbb9d1befe49b4811ca4b899bb55d248/TableauLinks.json"
+      "https://gist.githubusercontent.com/maanaskatta/3cf75f6b39dae46726d38eda2bd3e72a/raw/4d6c95481981d08dcf88960940c0656fd2889473/TableauLinks.json"
     );
 
     if (res.data && Object.keys(res.data).length > 0) {
+      console.log("Links", res.data);
       setLinks(res.data);
       setIsLoading(false);
     }
@@ -162,7 +140,7 @@ export default function Analytics() {
     if (links) {
       return (
         <div className="flex w-full ">
-          <div className="flex w-1/5 bg-purple-900 h-screen overflow-y-auto overflow-x-hidden">
+          <div className="flex w-1/5 bg-blue-700 h-screen overflow-y-auto overflow-x-hidden">
             <NavBar />
           </div>
           <div className="w-full flex flex-col">
@@ -170,7 +148,24 @@ export default function Analytics() {
               {analyticTiles.map((tile) => (
                 <Route
                   path={`/analytics` + tile.path}
-                  component={() => tile.render(tile.label)}
+                  component={() => (
+                    <div className="h-screen bg-blue-200 overflow-auto">
+                      <Tableau
+                        options={{
+                          ...(tile.label === "Dashboard"
+                            ? {
+                                width: 1290,
+                                height: 2800,
+                              }
+                            : {}),
+                        }}
+                        parameters={{
+                          device: "desktop",
+                        }}
+                        url={links[tile.label]}
+                      />
+                    </div>
+                  )}
                 />
               ))}
             </Switch>
