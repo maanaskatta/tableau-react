@@ -7,7 +7,7 @@ function App() {
     <Switch>
       <Route path="/login" component={() => <LoginPage />} />
       <Route path="/analytics" component={() => <Analytics />} />
-      {/* <Redirect to="/login" /> */}
+      <Redirect to="/login" />
     </Switch>
   );
 }
