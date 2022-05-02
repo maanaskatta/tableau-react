@@ -78,7 +78,7 @@ export default function LoginPage() {
                   {isLoading ? (
                     <AiOutlineLoading3Quarters className=" animate-spin text-xl" />
                   ) : (
-                    "SUBMIT"
+                    "Login"
                   )}
                 </button>
               </div>
